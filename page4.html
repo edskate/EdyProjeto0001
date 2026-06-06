@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animais do Edy 🐾</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #77a1d3, #79cbca, #e684ae);
+            color: #2b2b2b;
+            font-family: Arial, sans-serif;
+            padding: 40px;
+            text-align: center;
+            min-height: 100vh;
+        }
+        h1 {
+            color: #ffffff;
+            text-shadow: 0 0 16px rgba(0,0,0,0.25);
+            margin-bottom: 16px;
+        }
+        p {
+            max-width: 760px;
+            margin: 0 auto 30px;
+            line-height: 1.7;
+            font-size: 1.05rem;
+            color: #f1f1f1;
+        }
+        .focus-phrase {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #fff7d1;
+            margin-bottom: 18px;
+            text-shadow: 0 0 12px rgba(0,0,0,0.25);
+            cursor: pointer;
+            transition: transform 0.2s ease, color 0.2s ease;
+        }
+        .focus-phrase:hover {
+            color: #ffffff;
+            transform: translateY(-2px);
+        }
+        .message-box {
+            max-width: 760px;
+            margin: 0 auto 30px;
+            padding: 18px 22px;
+            background: rgba(255,255,255,0.18);
+            border: 1px solid rgba(255,255,255,0.35);
+            border-radius: 18px;
+            color: #fff;
+            font-size: 1.05rem;
+            line-height: 1.7;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        .message-box.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .gallery {
+            display: grid;
+            gap: 24px;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            margin-top: 30px;
+            perspective: 1200px;
+        }
+        figure {
+            width: 100%;
+            height: 260px;
+            margin: 0;
+            border-radius: 20px;
+            perspective: 1200px;
+            cursor: pointer;
+        }
+        figure .flip-card {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 0.8s ease;
+        }
+        figure.flipped .flip-card {
+            transform: rotateY(180deg);
+        }
+        .flip-card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+        .flip-card-front {
+            background: rgba(255,255,255,0.16);
+            box-shadow: 0 18px 40px rgba(0,0,0,0.15);
+        }
+        .flip-card-back {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: rgba(0,0,0,0.8);
+            color: #ffffff;
+            transform: rotateY(180deg);
+            text-align: center;
+            font-size: 1rem;
+            line-height: 1.5;
+            box-shadow: 0 18px 40px rgba(0,0,0,0.15);
+        }
+        .flip-card-front img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .flip-card-front figcaption {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 18px;
+            color: #ffffff;
+            font-weight: bold;
+            font-size: 1rem;
+            background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.55) 100%);
+            margin: 0;
+        }
+        .nav-links {
+            margin-top: 36px;
+        }
+        .nav-links a {
+            display: inline-block;
+            margin: 0 10px;
+            padding: 14px 26px;
+            color: #2b2b2b;
+            background: #ffffff;
+            border-radius: 999px;
+            text-decoration: none;
+            font-weight: bold;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.14);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .nav-links a:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 16px 34px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body>
+    <h1>Animais do Edy 🐾</h1>
+    <p class="focus-phrase" onclick="showMessage()">Foco na conexão com a natureza: cada imagem é um convite para sentir calma, curiosidade e alegria.</p>
+    <div id="messageBox" class="message-box">Clique na frase acima para receber a mensagem especial.</div>
+    <p>Uma galeria de animais inspiradores que mostram a magia da natureza. Cada foto traz um toque de energia e cuidado para complementar o mundo criativo de Edy.</p>
+    <div class="gallery">
+        <figure data-message="Gato curioso 🐱: calma e mistério em cada olhar." onclick="showPhotoMessage(this)">
+            <img src="https://images.unsplash.com/photo-1546182990-dffeafbe841d?auto=format&fit=crop&w=800&q=80" alt="Gato curioso">
+            <figcaption>Gato curioso 🐱</figcaption>
+        </figure>
+        <figure data-message="Cachorro feliz 🐶: alegria e amizade que contagiam." onclick="showPhotoMessage(this)">
+            <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=80" alt="Cachorro feliz">
+            <figcaption>Cachorro feliz 🐶</figcaption>
+        </figure>
+        <figure data-message="Pássaro colorido 🐦: liberdade e criatividade no voo." onclick="showPhotoMessage(this)">
+            <img src="https://images.unsplash.com/photo-1501706362039-c6e8098e5e5f?auto=format&fit=crop&w=800&q=80" alt="Pássaro colorido">
+            <figcaption>Pássaro colorido 🐦</figcaption>
+        </figure>
+        <figure data-message="Coelho simpático 🐰: ternura e energia suave para o dia." onclick="showPhotoMessage(this)">
+            <img src="https://images.unsplash.com/photo-1517423440428-a5a00ad493e8?auto=format&fit=crop&w=800&q=80" alt="Coelho simpático">
+            <figcaption>Coelho simpático 🐰</figcaption>
+        </figure>
+    </div>
+    <div class="nav-links">
+        <a href="page3.html">Voltar para página 3</a>
+        <a href="index.html">Ir para página principal</a>
+    </div>
+    <script>
+        function showMessage() {
+            const box = document.getElementById('messageBox');
+            box.textContent = 'Mensagem recebida: inspire-se na natureza e deixe a sua mente descansar com cada animal.';
+            box.classList.add('visible');
+        }
+
+        function showPhotoMessage(element) {
+            const box = document.getElementById('messageBox');
+            const message = element.getAttribute('data-message');
+            box.textContent = message;
+            box.classList.add('visible');
+        }
+    </script>
+</body>
+</html>
