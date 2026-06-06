@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marcador de Tempo - Tarefas</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1f35, #2d3a5f);
+            color: #f3f4f8;
+            min-height: 100vh;
+            padding: 24px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.4rem;
+            margin-bottom: 28px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .input-section {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+        }
+
+        .input-section input {
+            flex: 1;
+            min-width: 200px;
+            padding: 12px 16px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.06);
+            color: #f3f4f8;
+            font-size: 1rem;
+            transition: border 0.3s ease;
+        }
+
+        .input-section input:focus {
+            outline: none;
+            border-color: rgba(76, 209, 255, 0.6);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .input-section input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .input-section button {
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #4cd0ff, #00d4ff);
+            border: none;
+            border-radius: 12px;
+            color: #0d1f35;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .input-section button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px rgba(76, 209, 255, 0.3);
+        }
+
+        .task-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .task-item {
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 16px;
+            padding: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: transform 0.2s ease, background 0.2s ease;
+        }
+
+        .task-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(4px);
+        }
+
+        .task-content {
+            flex: 1;
+        }
+
+        .task-name {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+        }
+
+        .task-time {
+            font-size: 1.6rem;
+            color: #4cd0ff;
+            font-weight: 700;
+            font-family: 'Courier New', monospace;
+        }
+
+        .task-controls {
+            display: flex;
+            gap: 8px;
+            margin-left: 16px;
+        }
+
+        .task-controls button {
+            padding: 10px 14px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .btn-play {
+            background: #3ddc97;
+            color: #0d2a19;
+        }
+
+        .btn-pause {
+            background: #ffb347;
+            color: #2a1810;
+        }
+
+        .btn-stop {
+            background: #ff6b6b;
+            color: #2a0f0f;
+        }
+
+        .task-controls button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 24px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .empty-state p {
+            font-size: 1.1rem;
+            margin: 0;
+        }
+
+        .stats {
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 16px;
+            padding: 20px;
+            margin-top: 28px;
+            text-align: center;
+        }
+
+        .stats h3 {
+            margin: 0 0 12px;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        .stats p {
+            margin: 8px 0;
+            font-size: 1.4rem;
+            color: #4cd0ff;
+            font-family: 'Courier New', monospace;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 12px;
+            margin-top: 28px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .nav-links a {
+            display: inline-block;
+            padding: 12px 24px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 999px;
+            text-decoration: none;
+            color: #f3f4f8;
+            font-weight: 600;
+            transition: transform 0.2s ease, background 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>⏱️ Marcador de Tempo</h1>
+
+        <div class="input-section">
+            <input type="text" id="taskInput" placeholder="Digite o nome da tarefa..." />
+            <button onclick="addTask()">Adicionar Tarefa</button>
+        </div>
+
+        <div class="task-list" id="taskList">
+            <div class="empty-state">
+                <p>Nenhuma tarefa adicionada ainda. Comece a criar suas tarefas! 🚀</p>
+            </div>
+        </div>
+
+        <div class="stats">
+            <h3>Tempo Total Hoje</h3>
+            <p id="totalTime">00:00:00</p>
+            <p id="taskCount" style="font-size: 1rem; color: rgba(255, 255, 255, 0.6);">0 tarefas</p>
+        </div>
+
+        <div class="nav-links" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px;">
+            <a href="index.html" style="display: inline-block; padding: 8px 16px; background: #ffdd57; color: #1a2a6c; border-radius: 8px; text-decoration: none; font-weight: bold;">🏠 Início</a>
+            <a href="page2.html" style="display: inline-block; padding: 8px 16px; background: #bbe1fa; color: #0c2340; border-radius: 8px; text-decoration: none; font-weight: bold;">📄 Página 2</a>
+            <a href="page3.html" style="display: inline-block; padding: 8px 16px; background: #ffb347; color: #2f1b0b; border-radius: 8px; text-decoration: none; font-weight: bold;">📄 Página 3</a>
+            <a href="page4.html" style="display: inline-block; padding: 8px 16px; background: #79cbca; color: #2b2b2b; border-radius: 8px; text-decoration: none; font-weight: bold;">🐾 Animais</a>
+            <a href="page5.html" style="display: inline-block; padding: 8px 16px; background: #b8e6f6; color: #0a1428; border-radius: 8px; text-decoration: none; font-weight: bold;">🎮 Jogo</a>
+            <a href="page6.html" style="display: inline-block; padding: 8px 16px; background: #a7d8d0; color: #1a3a36; border-radius: 8px; text-decoration: none; font-weight: bold;">🏞️ Paisagens</a>
+            <a href="page7.html" style="display: inline-block; padding: 8px 16px; background: #3ddc97; color: #0d2a19; border-radius: 8px; text-decoration: none; font-weight: bold;">💼 Trabalho</a>
+            <a href="page8.html" style="display: inline-block; padding: 8px 16px; background: #ff8c42; color: #1a0f05; border-radius: 8px; text-decoration: none; font-weight: bold;">⏱️ Tempo</a>
+        </div>
+    </div>
+
+    <script>
+        let tasks = [];
+        let timers = {};
+
+        // Carregar tarefas do localStorage
+        function loadTasks() {
+            const saved = localStorage.getItem('tasks');
+            if (saved) {
+                tasks = JSON.parse(saved);
+                renderTasks();
+                updateTotalTime();
+            }
+        }
+
+        function addTask() {
+            const input = document.getElementById('taskInput');
+            const taskName = input.value.trim();
+
+            if (!taskName) {
+                alert('Digite o nome da tarefa!');
+                return;
+            }
+
+            const task = {
+                id: Date.now(),
+                name: taskName,
+                elapsed: 0,
+                running: false
+            };
+
+            tasks.push(task);
+            input.value = '';
+            saveTasks();
+            renderTasks();
+        }
+
+        function toggleTimer(taskId) {
+            const task = tasks.find(t => t.id === taskId);
+            if (!task) return;
+
+            task.running = !task.running;
+
+            if (task.running) {
+                startTimer(taskId);
+            } else {
+                clearInterval(timers[taskId]);
+                delete timers[taskId];
+            }
+
+            saveTasks();
+            renderTasks();
+        }
+
+        function startTimer(taskId) {
+            if (timers[taskId]) {
+                clearInterval(timers[taskId]);
+            }
+
+            timers[taskId] = setInterval(() => {
+                const task = tasks.find(t => t.id === taskId);
+                if (task) {
+                    task.elapsed++;
+                    saveTasks();
+                    renderTasks();
+                    updateTotalTime();
+                }
+            }, 1000);
+        }
+
+        function stopTask(taskId) {
+            const task = tasks.find(t => t.id === taskId);
+            if (task) {
+                task.running = false;
+                clearInterval(timers[taskId]);
+                delete timers[taskId];
+                tasks = tasks.filter(t => t.id !== taskId);
+                saveTasks();
+                renderTasks();
+                updateTotalTime();
+            }
+        }
+
+        function formatTime(seconds) {
+            const h = Math.floor(seconds / 3600);
+            const m = Math.floor((seconds % 3600) / 60);
+            const s = seconds % 60;
+            return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+        }
+
+        function renderTasks() {
+            const taskList = document.getElementById('taskList');
+
+            if (tasks.length === 0) {
+                taskList.innerHTML = '<div class="empty-state"><p>Nenhuma tarefa adicionada ainda. Comece a criar suas tarefas! 🚀</p></div>';
+                return;
+            }
+
+            taskList.innerHTML = tasks.map(task => `
+                <div class="task-item">
+                    <div class="task-content">
+                        <div class="task-name">${task.name}</div>
+                        <div class="task-time">${formatTime(task.elapsed)}</div>
+                    </div>
+                    <div class="task-controls">
+                        <button class="${task.running ? 'btn-pause' : 'btn-play'}" onclick="toggleTimer(${task.id})">
+                            ${task.running ? '⏸ Pausar' : '▶ Iniciar'}
+                        </button>
+                        <button class="btn-stop" onclick="stopTask(${task.id})">🗑 Remover</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function updateTotalTime() {
+            const total = tasks.reduce((sum, t) => sum + t.elapsed, 0);
+            document.getElementById('totalTime').textContent = formatTime(total);
+            document.getElementById('taskCount').textContent = `${tasks.length} ${tasks.length === 1 ? 'tarefa' : 'tarefas'}`;
+        }
+
+        function saveTasks() {
+            localStorage.setItem('tasks', JSON.stringify(tasks));
+        }
+
+        // Restaurar timers ao carregar a página
+        window.addEventListener('load', () => {
+            loadTasks();
+            tasks.forEach(task => {
+                if (task.running) {
+                    startTimer(task.id);
+                }
+            });
+        });
+
+        // Parar timers ao descarregar a página
+        window.addEventListener('beforeunload', () => {
+            Object.values(timers).forEach(timer => clearInterval(timer));
+        });
+
+        // Permite adicionar tarefa com Enter
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('taskInput').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    addTask();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

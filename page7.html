@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bem-vindo ao Trabalho</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f1d3a, #2b4f81);
+            color: #f3f4f8;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.25);
+            border-radius: 28px;
+            padding: 32px;
+            backdrop-filter: blur(14px);
+        }
+
+        h1 {
+            font-size: clamp(2.6rem, 4vw, 4rem);
+            margin: 0 0 18px;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+        }
+
+        p {
+            line-height: 1.75;
+            margin: 0 0 18px;
+        }
+
+        .hero {
+            display: flex;
+            gap: 18px;
+            flex-wrap: wrap;
+            margin-bottom: 28px;
+        }
+
+        .hero-card {
+            flex: 1 1 280px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 20px;
+            padding: 18px;
+            text-align: center;
+        }
+
+        .hero-card strong {
+            display: block;
+            margin-bottom: 12px;
+            font-size: 1.1rem;
+        }
+
+        .hero-card span {
+            display: block;
+            font-size: 3rem;
+            margin-top: 6px;
+        }
+
+        .button-row {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .button-row a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 24px;
+            border-radius: 999px;
+            text-decoration: none;
+            font-weight: 700;
+            background: #4bd0ff;
+            color: #10203f;
+            box-shadow: 0 16px 30px rgba(24, 144, 255, 0.2);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .button-row a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 34px rgba(24, 144, 255, 0.3);
+        }
+
+        .quote {
+            margin-top: 26px;
+            font-size: 1.1rem;
+            font-style: italic;
+            color: #cbd6f1;
+            border-left: 4px solid rgba(255, 255, 255, 0.35);
+            padding-left: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Bem-vindo ao seu melhor dia de trabalho</h1>
+        <p>Cada manhã é uma nova oportunidade para crescer, criar e deixar sua marca. Aqui, o foco é transformar ideias em progresso, com dedicação, disciplina e um sorriso no rosto.</p>
+
+        <div class="hero">
+            <div class="hero-card">
+                <strong>Comece com propósito</strong>
+                <span>🎯</span>
+                <p>Quando você trabalha com intenção, cada tarefa ganha energia e significado.</p>
+            </div>
+            <div class="hero-card">
+                <strong>Faça o melhor agora</strong>
+                <span>🔥</span>
+                <p>O progresso nasce da ação acelerada, mesmo nos pequenos passos do dia a dia.</p>
+            </div>
+            <div class="hero-card">
+                <strong>Conquiste com calma</strong>
+                <span>🌿</span>
+                <p>Foco não é pressa — é consistência, atenção e qualidade em cada entrega.</p>
+            </div>
+        </div>
+
+        <p>Boas-vindas ao espaço onde o trabalho encontra alegria. Permaneça concentrado, organize suas prioridades e celebre cada conquista, grande ou pequena.</p>
+
+        <div class="button-row" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px;">
+            <a href="index.html" style="display: inline-block; padding: 8px 16px; background: #ffdd57; color: #1a2a6c; border-radius: 8px; text-decoration: none; font-weight: bold;">🏠 Início</a>
+            <a href="page2.html" style="display: inline-block; padding: 8px 16px; background: #bbe1fa; color: #0c2340; border-radius: 8px; text-decoration: none; font-weight: bold;">📄 Página 2</a>
+            <a href="page3.html" style="display: inline-block; padding: 8px 16px; background: #ffb347; color: #2f1b0b; border-radius: 8px; text-decoration: none; font-weight: bold;">📄 Página 3</a>
+            <a href="page4.html" style="display: inline-block; padding: 8px 16px; background: #79cbca; color: #2b2b2b; border-radius: 8px; text-decoration: none; font-weight: bold;">🐾 Animais</a>
+            <a href="page5.html" style="display: inline-block; padding: 8px 16px; background: #b8e6f6; color: #0a1428; border-radius: 8px; text-decoration: none; font-weight: bold;">🎮 Jogo</a>
+            <a href="page6.html" style="display: inline-block; padding: 8px 16px; background: #a7d8d0; color: #1a3a36; border-radius: 8px; text-decoration: none; font-weight: bold;">🏞️ Paisagens</a>
+            <a href="page7.html" style="display: inline-block; padding: 8px 16px; background: #3ddc97; color: #0d2a19; border-radius: 8px; text-decoration: none; font-weight: bold;">💼 Trabalho</a>
+            <a href="page8.html" style="display: inline-block; padding: 8px 16px; background: #ff8c42; color: #1a0f05; border-radius: 8px; text-decoration: none; font-weight: bold;">⏱️ Tempo</a>
+        </div>
+
+        <p class="quote">"O sucesso do trabalho começa com a clareza do propósito e o cuidado em fazer bem feito."</p>
+    </div>
+</body>
+</html>
