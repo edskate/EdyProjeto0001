@@ -151,25 +151,55 @@
     <div id="messageBox" class="message-box">Clique na frase acima para receber a mensagem especial.</div>
     <p>Uma galeria de animais inspiradores que mostram a magia da natureza. Cada foto traz um toque de energia e cuidado para complementar o mundo criativo de Edy.</p>
     <div class="gallery">
-        <figure data-message="Gato curioso 🐱: calma e mistério em cada olhar." onclick="showPhotoMessage(this)">
-            <img src="https://images.unsplash.com/photo-1546182990-dffeafbe841d?auto=format&fit=crop&w=800&q=80" alt="Gato curioso">
-            <figcaption>Gato curioso 🐱</figcaption>
+        <figure data-message="Gato curioso 🐱: calma e mistério em cada olhar." onclick="toggleFlipAndSwap(this)">
+            <div class="flip-card">
+                <div class="flip-card-face flip-card-front">
+                    <img src="https://images.unsplash.com/photo-1546182990-dffeafbe841d?auto=format&fit=crop&w=800&q=80" alt="Gato curioso">
+                    <figcaption>Gato curioso 🐱</figcaption>
+                </div>
+                <div class="flip-card-face flip-card-back">Gato curioso 🐱: calma e mistério em cada olhar.</div>
+            </div>
         </figure>
-        <figure data-message="Cachorro feliz 🐶: alegria e amizade que contagiam." onclick="showPhotoMessage(this)">
-            <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=80" alt="Cachorro feliz">
-            <figcaption>Cachorro feliz 🐶</figcaption>
+        <figure data-message="Leão sábio 🦁: seja focado e não bravo, tenha paciência." onclick="toggleFlipAndSwap(this)">
+            <div class="flip-card">
+                <div class="flip-card-face flip-card-front">
+                    <img src="https://images.unsplash.com/photo-1518791841217-8f162f1e1131?auto=format&fit=crop&w=800&q=80" alt="Leão majestoso">
+                    <figcaption>Leão majestoso 🦁</figcaption>
+                </div>
+                <div class="flip-card-face flip-card-back">Leão sábio 🦁: seja focado e não bravo, tenha paciência.</div>
+            </div>
         </figure>
-        <figure data-message="Pássaro colorido 🐦: liberdade e criatividade no voo." onclick="showPhotoMessage(this)">
-            <img src="https://images.unsplash.com/photo-1501706362039-c6e8098e5e5f?auto=format&fit=crop&w=800&q=80" alt="Pássaro colorido">
-            <figcaption>Pássaro colorido 🐦</figcaption>
+        <figure data-message="Cachorro feliz 🐶: alegria e amizade que contagiam." onclick="toggleFlipAndSwap(this)">
+            <div class="flip-card">
+                <div class="flip-card-face flip-card-front">
+                    <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=80" alt="Cachorro feliz">
+                    <figcaption>Cachorro feliz 🐶</figcaption>
+                </div>
+                <div class="flip-card-face flip-card-back">Cachorro feliz 🐶: alegria e amizade que contagiam.</div>
+            </div>
         </figure>
-        <figure data-message="Coelho simpático 🐰: ternura e energia suave para o dia." onclick="showPhotoMessage(this)">
-            <img src="https://images.unsplash.com/photo-1517423440428-a5a00ad493e8?auto=format&fit=crop&w=800&q=80" alt="Coelho simpático">
-            <figcaption>Coelho simpático 🐰</figcaption>
+        <figure data-message="Pássaro colorido 🐦: liberdade e criatividade no voo." onclick="toggleFlipAndSwap(this)">
+            <div class="flip-card">
+                <div class="flip-card-face flip-card-front">
+                    <img src="https://images.unsplash.com/photo-1501706362039-c6e8098e5e5f?auto=format&fit=crop&w=800&q=80" alt="Pássaro colorido">
+                    <figcaption>Pássaro colorido 🐦</figcaption>
+                </div>
+                <div class="flip-card-face flip-card-back">Pássaro colorido 🐦: liberdade e criatividade no voo.</div>
+            </div>
+        </figure>
+        <figure data-message="Coelho simpático 🐰: ternura e energia suave para o dia." onclick="toggleFlipAndSwap(this)">
+            <div class="flip-card">
+                <div class="flip-card-face flip-card-front">
+                    <img src="https://images.unsplash.com/photo-1517423440428-a5a00ad493e8?auto=format&fit=crop&w=800&q=80" alt="Coelho simpático">
+                    <figcaption>Coelho simpático 🐰</figcaption>
+                </div>
+                <div class="flip-card-face flip-card-back">Coelho simpático 🐰: ternura e energia suave para o dia.</div>
+            </div>
         </figure>
     </div>
     <div class="nav-links">
         <a href="page3.html">Voltar para página 3</a>
+        <a href="page5.html">Jogo da Adivinha</a>
         <a href="index.html">Ir para página principal</a>
     </div>
     <script>
@@ -184,6 +214,19 @@
             const message = element.getAttribute('data-message');
             box.textContent = message;
             box.classList.add('visible');
+        }
+
+        function swapWithNext(element) {
+            const parent = element.parentNode;
+            const next = element.nextElementSibling || parent.firstElementChild;
+            if (!next || next === element) return;
+            parent.insertBefore(next, element);
+        }
+
+        function toggleFlipAndSwap(element) {
+            element.classList.toggle('flipped');
+            showPhotoMessage(element);
+            swapWithNext(element);
         }
     </script>
 </body>

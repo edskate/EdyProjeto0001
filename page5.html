@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo da Adivinha - Foto Igual</title>
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: radial-gradient(circle at top, #23074d, #cc5333);
+            color: #f8f6ff;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 32px;
+        }
+        h1 {
+            margin-bottom: 8px;
+            font-size: 2.4rem;
+            letter-spacing: 0.03em;
+            text-shadow: 0 0 18px rgba(255,255,255,0.2);
+        }
+        p {
+            max-width: 800px;
+            margin: 0 auto 24px;
+            line-height: 1.7;
+            color: #f7f3ff;
+        }
+        .target-box {
+            display: inline-block;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.18);
+            border-radius: 24px;
+            padding: 18px;
+            margin-bottom: 18px;
+        }
+        .target-box img {
+            width: 280px;
+            max-width: 90vw;
+            border-radius: 20px;
+            display: block;
+            margin: 0 auto 14px;
+            box-shadow: 0 18px 50px rgba(0,0,0,0.25);
+        }
+        .target-label {
+            font-size: 1.1rem;
+            color: #ffefc3;
+        }
+        .status {
+            max-width: 760px;
+            margin: 0 auto 24px;
+            padding: 16px 18px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 16px;
+            color: #fff;
+            font-size: 1rem;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 14px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 8px;
+        }
+        .card {
+            position: relative;
+            border-radius: 18px;
+            background: rgba(255,255,255,0.06);
+            overflow: hidden;
+            cursor: pointer;
+            border: 1px solid rgba(255,255,255,0.12);
+            transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 18px 36px rgba(0,0,0,0.22);
+            border-color: rgba(255,255,255,0.3);
+        }
+        .card img {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            display: block;
+        }
+        .card .overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.25);
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        .card:hover .overlay {
+            opacity: 1;
+        }
+        .footer-links {
+            margin-top: 24px;
+        }
+        .footer-links a {
+            display: inline-block;
+            margin: 0 8px 8px;
+            padding: 12px 22px;
+            background: #ffffff;
+            color: #261335;
+            text-decoration: none;
+            border-radius: 999px;
+            font-weight: bold;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .footer-links a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 26px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body>
+    <h1>Jogo da Adivinha 📸</h1>
+    <p>Encontre a foto igual entre as 30 opções. Clique na imagem que corresponde exatamente ao modelo mostrado acima.</p>
+    <div class="target-box">
+        <img id="targetImage" src="" alt="Foto modelo" />
+        <div class="target-label">Foto alvo: <strong id="targetLabel"></strong></div>
+    </div>
+    <div id="status" class="status">Clique em uma das 30 fotos abaixo para adivinhar.</div>
+    <div class="grid" id="photoGrid"></div>
+    <div class="footer-links">
+        <a href="page4.html">Voltar para as fotos</a>
+        <a href="page5.html" onclick="resetGame();">Reiniciar jogo</a>
+    </div>
+    <script>
+        const images = [
+            { label: 'Animal 1', src: 'https://loremflickr.com/400/300/animal?lock=1' },
+            { label: 'Animal 2', src: 'https://loremflickr.com/400/300/animal?lock=2' },
+            { label: 'Animal 3', src: 'https://loremflickr.com/400/300/animal?lock=3' },
+            { label: 'Animal 4', src: 'https://loremflickr.com/400/300/animal?lock=4' },
+            { label: 'Animal 5', src: 'https://loremflickr.com/400/300/animal?lock=5' },
+            { label: 'Animal 6', src: 'https://loremflickr.com/400/300/animal?lock=6' },
+            { label: 'Animal 7', src: 'https://loremflickr.com/400/300/animal?lock=7' },
+            { label: 'Animal 8', src: 'https://loremflickr.com/400/300/animal?lock=8' },
+            { label: 'Animal 9', src: 'https://loremflickr.com/400/300/animal?lock=9' },
+            { label: 'Animal 10', src: 'https://loremflickr.com/400/300/animal?lock=10' },
+            { label: 'Animal 11', src: 'https://loremflickr.com/400/300/animal?lock=11' },
+            { label: 'Animal 12', src: 'https://loremflickr.com/400/300/animal?lock=12' },
+            { label: 'Animal 13', src: 'https://loremflickr.com/400/300/animal?lock=13' },
+            { label: 'Animal 14', src: 'https://loremflickr.com/400/300/animal?lock=14' },
+            { label: 'Animal 15', src: 'https://loremflickr.com/400/300/animal?lock=15' },
+            { label: 'Animal 16', src: 'https://loremflickr.com/400/300/animal?lock=16' },
+            { label: 'Animal 17', src: 'https://loremflickr.com/400/300/animal?lock=17' },
+            { label: 'Animal 18', src: 'https://loremflickr.com/400/300/animal?lock=18' },
+            { label: 'Animal 19', src: 'https://loremflickr.com/400/300/animal?lock=19' },
+            { label: 'Animal 20', src: 'https://loremflickr.com/400/300/animal?lock=20' },
+            { label: 'Animal 21', src: 'https://loremflickr.com/400/300/animal?lock=21' },
+            { label: 'Animal 22', src: 'https://loremflickr.com/400/300/animal?lock=22' },
+            { label: 'Animal 23', src: 'https://loremflickr.com/400/300/animal?lock=23' },
+            { label: 'Animal 24', src: 'https://loremflickr.com/400/300/animal?lock=24' },
+            { label: 'Animal 25', src: 'https://loremflickr.com/400/300/animal?lock=25' },
+            { label: 'Animal 26', src: 'https://loremflickr.com/400/300/animal?lock=26' },
+            { label: 'Animal 27', src: 'https://loremflickr.com/400/300/animal?lock=27' },
+            { label: 'Animal 28', src: 'https://loremflickr.com/400/300/animal?lock=28' },
+            { label: 'Animal 29', src: 'https://loremflickr.com/400/300/animal?lock=29' },
+            { label: 'Animal 30', src: 'https://loremflickr.com/400/300/animal?lock=30' }
+        ];
+
+        let target;
+        let cards = [];
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function buildGame() {
+            const grid = document.getElementById('photoGrid');
+            const status = document.getElementById('status');
+            const targetImage = document.getElementById('targetImage');
+            const targetLabel = document.getElementById('targetLabel');
+
+            const options = [...images];
+            shuffle(options);
+            target = options[0];
+            targetImage.src = target.src;
+            targetLabel.textContent = target.label;
+            status.textContent = 'Clique na foto igual à imagem acima entre as 30 imagens.';
+            grid.innerHTML = '';
+
+            const shuffled = shuffle(options.slice());
+            shuffled.forEach((image, index) => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.dataset.src = image.src;
+                card.innerHTML = `
+                    <img src="${image.src}" alt="${image.label}" />
+                    <div class="overlay"></div>
+                `;
+                card.addEventListener('click', () => handleGuess(image.src, card));
+                grid.appendChild(card);
+            });
+            cards = Array.from(document.querySelectorAll('.card'));
+        }
+
+        function handleGuess(src, card) {
+            const status = document.getElementById('status');
+            if (src === target.src) {
+                status.textContent = 'Parabéns! Você encontrou a foto igual! 🎉';
+                card.style.borderColor = '#9cff6c';
+                card.style.boxShadow = '0 18px 42px rgba(156,255,108,0.45)';
+            } else {
+                status.textContent = 'Tente novamente. Esta não é a foto igual.';
+                card.style.transform = 'scale(0.98)';
+                setTimeout(() => card.style.transform = '', 200);
+            }
+        }
+
+        function resetGame() {
+            buildGame();
+        }
+
+        window.addEventListener('DOMContentLoaded', buildGame);
+    </script>
+</body>
+</html>
