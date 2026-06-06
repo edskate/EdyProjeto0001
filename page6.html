@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paisagens do Edy 🌄</title>
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: radial-gradient(circle at top, #0f2027, #203a43, #2c5364);
+            color: #f8f7ff;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 36px 24px;
+        }
+        h1 {
+            margin-bottom: 8px;
+            font-size: 2.6rem;
+            letter-spacing: 0.03em;
+            text-shadow: 0 0 18px rgba(255,255,255,0.18);
+        }
+        p {
+            max-width: 820px;
+            margin: 0 auto 28px;
+            line-height: 1.75;
+            color: #dbe6f1;
+        }
+        .gallery {
+            display: grid;
+            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            max-width: 1240px;
+            margin: 0 auto 30px;
+        }
+        .card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 24px;
+            border: 1px solid rgba(255,255,255,0.12);
+            box-shadow: 0 22px 54px rgba(0,0,0,0.25);
+            transform: translateZ(0);
+            transition: transform 0.35s ease, box-shadow 0.35s ease;
+            background: rgba(255,255,255,0.05);
+        }
+        .card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 28px 68px rgba(0,0,0,0.36);
+        }
+        .card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+        .card-content {
+            padding: 18px 16px 20px;
+            text-align: left;
+        }
+        .card-title {
+            font-size: 1.1rem;
+            margin: 0 0 8px;
+            color: #ffffff;
+        }
+        .card-desc {
+            margin: 0;
+            color: #c7d8ed;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+        .footer-links {
+            margin-top: 18px;
+        }
+        .footer-links a {
+            display: inline-block;
+            margin: 0 8px 8px;
+            padding: 12px 24px;
+            background: #ffffff;
+            color: #203a43;
+            text-decoration: none;
+            border-radius: 999px;
+            font-weight: bold;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .footer-links a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.18);
+        }
+    </style>
+</head>
+<body>
+    <h1>Paisagens do Edy 🌄</h1>
+    <p>Explore lindas paisagens naturais com cenas que inspiram tranquilidade e beleza. Cada cartão mostra uma vista de tirar o fôlego.</p>
+    <div class="gallery">
+        <div class="card">
+            <img src="https://loremflickr.com/640/420/landscape?lock=41" alt="Paisagem 1">
+            <div class="card-content">
+                <h2 class="card-title">Vale tranquilo</h2>
+                <p class="card-desc">Montanhas suaves e uma atmosfera serena.</p>
+            </div>
+        </div>
+        <div class="card">
+            <img src="https://loremflickr.com/640/420/landscape?lock=42" alt="Paisagem 2">
+            <div class="card-content">
+                <h2 class="card-title">Horizonte dourado</h2>
+                <p class="card-desc">Céu colorido ao pôr do sol sobre colinas distantes.</p>
+            </div>
+        </div>
+        <div class="card">
+            <img src="https://loremflickr.com/640/420/landscape?lock=43" alt="Paisagem 3">
+            <div class="card-content">
+                <h2 class="card-title">Lago cristalino</h2>
+                <p class="card-desc">Águas calmas refletindo as cores do céu.</p>
+            </div>
+        </div>
+        <div class="card">
+            <img src="https://loremflickr.com/640/420/landscape?lock=44" alt="Paisagem 4">
+            <div class="card-content">
+                <h2 class="card-title">Floresta serena</h2>
+                <p class="card-desc">Caminhos verdes com luz suave filtrada pelas folhas.</p>
+            </div>
+        </div>
+        <div class="card">
+            <img src="https://loremflickr.com/640/420/landscape?lock=45" alt="Paisagem 5">
+            <div class="card-content">
+                <h2 class="card-title">Riacho montanhês</h2>
+                <p class="card-desc">Água correndo entre pedras em uma trilha natural.</p>
+            </div>
+        </div>
+        <div class="card">
+            <img src="https://loremflickr.com/640/420/landscape?lock=46" alt="Paisagem 6">
+            <div class="card-content">
+                <h2 class="card-title">Campo dourado</h2>
+                <p class="card-desc">Campos abertos e luz suave harmonizando a cena.</p>
+            </div>
+        </div>
+        <div class="card">
+            <img src="https://loremflickr.com/640/420/landscape?lock=47" alt="Paisagem 7">
+            <div class="card-content">
+                <h2 class="card-title">Colinas verdes</h2>
+                <p class="card-desc">Uma vista ampla de colinas com cores vibrantes.</p>
+            </div>
+        </div>
+        <div class="card">
+            <img src="https://loremflickr.com/640/420/landscape?lock=48" alt="Paisagem 8">
+            <div class="card-content">
+                <h2 class="card-title">Céu dramático</h2>
+                <p class="card-desc">Nuvens pesadas fluorescentes sobre um vale distante.</p>
+            </div>
+        </div>
+        <div class="card">
+            <img src="https://loremflickr.com/640/420/landscape?lock=49" alt="Paisagem 9">
+            <div class="card-content">
+                <h2 class="card-title">Vista costeira</h2>
+                <p class="card-desc">Mar e falésias se encontram em um cenário límpido.</p>
+            </div>
+        </div>
+        <div class="card">
+            <img src="https://loremflickr.com/640/420/landscape?lock=50" alt="Paisagem 10">
+            <div class="card-content">
+                <h2 class="card-title">Trilha dourada</h2>
+                <p class="card-desc">Um caminho natural banhado pela luz do amanhecer.</p>
+            </div>
+        </div>
+        <div class="card">
+            <img src="https://loremflickr.com/640/420/landscape?lock=51" alt="Paisagem 11">
+            <div class="card-content">
+                <h2 class="card-title">Vale florido</h2>
+                <p class="card-desc">Um campo florido com cores suaves e tranquilas.</p>
+            </div>
+        </div>
+        <div class="card">
+            <img src="https://loremflickr.com/640/420/landscape?lock=52" alt="Paisagem 12">
+            <div class="card-content">
+                <h2 class="card-title">Montanhas azuis</h2>
+                <p class="card-desc">Picos distantes tingidos de azul com névoa suave.</p>
+            </div>
+        </div>
+        <div class="card">
+            <img src="https://loremflickr.com/640/420/landscape?lock=53" alt="Paisagem 13">
+            <div class="card-content">
+                <h2 class="card-title">Por do sol no campo</h2>
+                <p class="card-desc">Um crepúsculo quente iluminando campos tranquilos.</p>
+            </div>
+        </div>
+        <div class="card">
+            <img src="https://loremflickr.com/640/420/landscape?lock=54" alt="Paisagem 14">
+            <div class="card-content">
+                <h2 class="card-title">Trilho verde</h2>
+                <p class="card-desc">Trilha longa atravessando vales e vegetação densa.</p>
+            </div>
+        </div>
+        <div class="card">
+            <img src="https://loremflickr.com/640/420/landscape?lock=55" alt="Paisagem 15">
+            <div class="card-content">
+                <h2 class="card-title">Luz da manhã</h2>
+                <p class="card-desc">Primeiros raios de sol penetrando a paisagem matinal.</p>
+            </div>
+        </div>
+        <div class="card">
+            <img src="https://loremflickr.com/640/420/landscape?lock=56" alt="Paisagem 16">
+            <div class="card-content">
+                <h2 class="card-title">Montanha enevoada</h2>
+                <p class="card-desc">Topo de montanha coberto por névoa suave e misteriosa.</p>
+            </div>
+        </div>
+    </div>
+    <div class="footer-links">
+        <a href="page4.html">Voltar para fotos de animais</a>
+        <a href="page5.html">Ir para o jogo da adivinha</a>
+        <a href="index.html">Página principal</a>
+    </div>
+</body>
+</html>
