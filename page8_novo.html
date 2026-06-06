@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marcador de Tempo - Tarefas</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1f35, #2d3a5f);
+            color: #f3f4f8;
+            min-height: 100vh;
+            padding: 24px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.6rem;
+            margin-bottom: 28px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .input-section {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+        }
+
+        .input-section input {
+            flex: 1;
+            min-width: 220px;
+            padding: 14px 18px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.08);
+            color: #f3f4f8;
+            font-size: 1rem;
+            transition: border 0.3s ease;
+        }
+
+        .input-section input:focus {
+            outline: none;
+            border-color: rgba(76, 209, 255, 0.7);
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .input-section input::placeholder {
+            color: rgba(255, 255, 255, 0.55);
+        }
+
+        .input-section button {
+            padding: 14px 24px;
+            background: linear-gradient(135deg, #4cd0ff, #00d4ff);
+            border: none;
+            border-radius: 14px;
+            color: #0d1f35;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .input-section button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 28px rgba(76, 209, 255, 0.3);
+        }
+
+        .task-list {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .task-item {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            border-radius: 18px;
+            padding: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .task-item::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, rgba(76, 209, 255, 0.16), transparent);
+            width: var(--progress, 0%);
+            transition: width 0.3s ease;
+            pointer-events: none;
+        }
+
+        .task-item.alert-80 {
+            border-color: #ffb347;
+        }
+
+        .task-item.alert-95 {
+            border-color: #ff6b6b;
+            box-shadow: 0 0 20px rgba(255, 107, 107, 0.25);
+        }
+
+        .task-item:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateY(-2px);
+        }
+
+        .task-content {
+            flex: 1;
+            position: relative;
+            z-index: 1;
+        }
+
+        .task-name {
+            font-weight: 700;
+            font-size: 1.15rem;
+            margin-bottom: 8px;
+        }
+
+        .task-time {
+            font-size: 1.6rem;
+            color: #4cd0ff;
+            font-weight: 700;
+            font-family: 'Courier New', monospace;
+            margin-bottom: 8px;
+        }
+
+        .task-progress {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .progress-bar {
+            flex: 1;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.18);
+            border-radius: 999px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4cd0ff, #00d4ff);
+            width: var(--progress, 0%);
+            transition: width 0.3s ease;
+        }
+
+        .alert-badge {
+            display: none;
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            background: #ffb347;
+            color: #2a1810;
+            padding: 5px 11px;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            z-index: 2;
+        }
+
+        .alert-badge.show {
+            display: block;
+            animation: pulse 0.8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .task-controls {
+            display: flex;
+            gap: 10px;
+            margin-left: 18px;
+            z-index: 1;
+        }
+
+        .task-controls button {
+            padding: 12px 16px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.95rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .btn-play {
+            background: #3ddc97;
+            color: #0d2a19;
+        }
+
+        .btn-pause {
+            background: #ffb347;
+            color: #2a1810;
+        }
+
+        .btn-stop {
+            background: #ff6b6b;
+            color: #2a0f0f;
+        }
+
+        .task-controls button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 48px 24px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .empty-state p {
+            font-size: 1.1rem;
+            margin: 0;
+        }
+
+        .stats {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            border-radius: 18px;
+            padding: 22px;
+            margin-top: 28px;
+            text-align: center;
+        }
+
+        .stats h3 {
+            margin: 0 0 12px;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .stats p {
+            margin: 8px 0;
+            font-size: 1.4rem;
+            color: #4cd0ff;
+            font-family: 'Courier New', monospace;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 12px;
+            margin-top: 28px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .nav-links a {
+            display: inline-block;
+            padding: 12px 22px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 999px;
+            text-decoration: none;
+            color: #f3f4f8;
+            font-weight: 600;
+            transition: transform 0.2s ease, background 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.16);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>⏱️ Marcador de Tempo</h1>
+
+        <div class="input-section">
+            <input type="text" id="taskInput" placeholder="Digite o nome da tarefa..." />
+            <button onclick="addTask()">Adicionar Tarefa</button>
+        </div>
+
+        <div class="task-list" id="taskList">
+            <div class="empty-state">
+                <p>Nenhuma tarefa adicionada ainda. Comece a criar suas tarefas! 🚀</p>
+            </div>
+        </div>
+
+        <div class="stats">
+            <h3>Tempo Total Hoje</h3>
+            <p id="totalTime">00:00:00</p>
+            <p id="totalPercent">0% do limite de 30 min</p>
+            <p id="taskCount" style="font-size: 1rem; color: rgba(255, 255, 255, 0.65);">0 tarefas</p>
+        </div>
+
+        <div class="nav-links">
+            <a href="index.html">🏠 Início</a>
+            <a href="page2.html">📄 Página 2</a>
+            <a href="page3.html">📄 Página 3</a>
+            <a href="page4.html">🐾 Animais</a>
+            <a href="page5.html">🎮 Jogo</a>
+            <a href="page6.html">🏞️ Paisagens</a>
+            <a href="page7.html">💼 Trabalho</a>
+            <a href="page8.html">⏱️ Tempo</a>
+        </div>
+    </div>
+
+    <script>
+        const durationLimit = 1800;
+        let tasks = [];
+        let timers = {};
+
+        function loadTasks() {
+            const saved = localStorage.getItem('tasks');
+            if (saved) {
+                tasks = JSON.parse(saved);
+                renderTasks();
+                updateTotalTime();
+            }
+        }
+
+        function addTask() {
+            const input = document.getElementById('taskInput');
+            const taskName = input.value.trim();
+
+            if (!taskName) {
+                alert('Digite o nome da tarefa!');
+                return;
+            }
+
+            const task = {
+                id: Date.now(),
+                name: taskName,
+                elapsed: 0,
+                running: false,
+                alertedNearly: false,
+                alertedCompleted: false
+            };
+
+            tasks.push(task);
+            input.value = '';
+            saveTasks();
+            renderTasks();
+            updateTotalTime();
+        }
+
+        function toggleTimer(taskId) {
+            const task = tasks.find(t => t.id === taskId);
+            if (!task) return;
+
+            task.running = !task.running;
+
+            if (task.running) {
+                startTimer(taskId);
+            } else {
+                clearInterval(timers[taskId]);
+                delete timers[taskId];
+            }
+
+            saveTasks();
+            renderTasks();
+        }
+
+        function startTimer(taskId) {
+            if (timers[taskId]) {
+                clearInterval(timers[taskId]);
+            }
+
+            timers[taskId] = setInterval(() => {
+                const task = tasks.find(t => t.id === taskId);
+                if (task) {
+                    task.elapsed++;
+                    checkTaskAlerts(task);
+                    saveTasks();
+                    renderTasks();
+                    updateTotalTime();
+                }
+            }, 1000);
+        }
+
+        function stopTask(taskId) {
+            const task = tasks.find(t => t.id === taskId);
+            if (task) {
+                task.running = false;
+                clearInterval(timers[taskId]);
+                delete timers[taskId];
+                tasks = tasks.filter(t => t.id !== taskId);
+                saveTasks();
+                renderTasks();
+                updateTotalTime();
+            }
+        }
+
+        function formatTime(seconds) {
+            const h = Math.floor(seconds / 3600);
+            const m = Math.floor((seconds % 3600) / 60);
+            const s = seconds % 60;
+            return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+        }
+
+        function getPercentage(seconds) {
+            return Math.min(100, Math.round((seconds / durationLimit) * 100));
+        }
+
+        function checkTaskAlerts(task) {
+            const percentage = getPercentage(task.elapsed);
+            if (percentage >= 100 && !task.alertedCompleted) {
+                task.alertedCompleted = true;
+                alert(`Parabéns! A tarefa "${task.name}" atingiu 30 minutos.`);
+            } else if (percentage >= 90 && !task.alertedNearly) {
+                task.alertedNearly = true;
+                alert(`Atenção: a tarefa "${task.name}" está próxima de 30 minutos.`);
+            }
+        }
+
+        function renderTasks() {
+            const taskList = document.getElementById('taskList');
+
+            if (tasks.length === 0) {
+                taskList.innerHTML = '<div class="empty-state"><p>Nenhuma tarefa adicionada ainda. Comece a criar suas tarefas! 🚀</p></div>';
+                return;
+            }
+
+            taskList.innerHTML = tasks.map(task => {
+                const percentage = getPercentage(task.elapsed);
+                const alertText = percentage >= 100 ? 'Concluído 30 min' : percentage >= 90 ? 'Perto de 30 min' : '';
+                const alertClass = percentage >= 95 ? 'alert-95' : percentage >= 90 ? 'alert-80' : '';
+                return `
+                <div class="task-item ${alertClass}" style="--progress: ${percentage}%">
+                    <div class="alert-badge ${alertText ? 'show' : ''}">${alertText}</div>
+                    <div class="task-content">
+                        <div class="task-name">${task.name}</div>
+                        <div class="task-time">${formatTime(task.elapsed)}</div>
+                        <div class="task-progress">
+                            <div>${percentage}%</div>
+                            <div class="progress-bar"><div class="progress-fill" style="width: ${percentage}%"></div></div>
+                        </div>
+                    </div>
+                    <div class="task-controls">
+                        <button class="${task.running ? 'btn-pause' : 'btn-play'}" onclick="toggleTimer(${task.id})">
+                            ${task.running ? '⏸ Pausar' : '▶ Iniciar'}
+                        </button>
+                        <button class="btn-stop" onclick="stopTask(${task.id})">🗑 Remover</button>
+                    </div>
+                </div>
+            `;
+            }).join('');
+        }
+
+        function updateTotalTime() {
+            const total = tasks.reduce((sum, t) => sum + t.elapsed, 0);
+            const totalPercent = tasks.length ? Math.min(100, Math.round((total / (tasks.length * durationLimit)) * 100)) : 0;
+            document.getElementById('totalTime').textContent = formatTime(total);
+            document.getElementById('taskCount').textContent = `${tasks.length} ${tasks.length === 1 ? 'tarefa' : 'tarefas'}`;
+            document.getElementById('totalPercent').textContent = `${totalPercent}% do limite de 30 min por tarefa`; 
+        }
+
+        function saveTasks() {
+            localStorage.setItem('tasks', JSON.stringify(tasks));
+        }
+
+        window.addEventListener('load', () => {
+            loadTasks();
+            tasks.forEach(task => {
+                if (task.running) {
+                    startTimer(task.id);
+                }
+            });
+        });
+
+        window.addEventListener('beforeunload', () => {
+            Object.values(timers).forEach(timer => clearInterval(timer));
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('taskInput').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    addTask();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
